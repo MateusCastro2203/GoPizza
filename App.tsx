@@ -1,11 +1,12 @@
 import React from 'react';
 import AppLoading from 'expo-app-loading';
 import { StatusBar } from 'expo-status-bar'
-import {useFonts, DMSans_400Regular} from '@expo-google-fonts/dm-sans';
-import {DMSerifDisplay_400Regular} from '@expo-google-fonts/dm-serif-display';
-import {ThemeProvider} from 'styled-components/native'; 
+import { useFonts, DMSans_400Regular } from '@expo-google-fonts/dm-sans';
+import { DMSerifDisplay_400Regular } from '@expo-google-fonts/dm-serif-display';
+import { ThemeProvider } from 'styled-components/native';
 import theme from './src/theme';
-import {SingIn} from '@screens/SingIn'
+import { SingIn } from '@screens/SingIn'
+import { AuthProvider } from '@hooks/auth'
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -13,14 +14,16 @@ export default function App() {
     DMSerifDisplay_400Regular
   });
 
-  if(!fontsLoaded){
-    return <AppLoading/>
+  if (!fontsLoaded) {
+    return <AppLoading />
   }
 
   return (
     <ThemeProvider theme={theme} >
       <StatusBar style="light" translucent backgroundColor="transparent" />
-      <SingIn/>
+      <AuthProvider>
+        <SingIn />
+      </AuthProvider>
     </ThemeProvider>
   );
 }
